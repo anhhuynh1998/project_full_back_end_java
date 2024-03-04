@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Adda - Social Network HTML Template</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <!-- CSS
+    ============================================ -->
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+    <!-- Icon Font CSS -->
+    <link rel="stylesheet" href="../assets/css/vendor/bicon.min.css">
+    <!-- Flat Icon CSS -->
+    <link rel="stylesheet" href="../assets/css/vendor/flaticon.css">
+    <!-- audio & video player CSS -->
+    <link rel="stylesheet" href="../assets/css/plugins/plyr.css">
+    <!-- Slick CSS -->
+    <link rel="stylesheet" href="../assets/css/plugins/slick.min.css">
+    <!-- nice-select CSS -->
+    <link rel="stylesheet" href="../assets/css/plugins/nice-select.css">
+    <!-- perfect scrollbar css -->
+    <link rel="stylesheet" href="../assets/css/plugins/perfect-scrollbar.css">
+    <!-- light gallery css -->
+    <link rel="stylesheet" href="../assets/css/plugins/lightgallery.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-transparent">
+<main>
+    <div class="main-wrapper pb-0 mb-0">
+        <div class="timeline-wrapper">
+            <div class="timeline-page-wrapper">
+                <div class="container-fluid p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6 order-2 order-lg-1">
+                            <div class="timeline-bg-content bg-img" data-bg="assets/images/timeline/adda-timeline.jpg">
+                                <h3 class="timeline-bg-title">Let’s see what’s happening to you and your world. Welcome in Adda.</h3>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 order-1 order-lg-2 d-flex align-items-center justify-content-center">
+                            <div class="signup-form-wrapper">
+                                <h1 class="create-acc text-center">Create An Account</h1>
+                                <div class="signup-inner text-center">
+                                    <h3 class="title">Wellcome to Premium</h3>
+                                    <form class="signup-inner--form"
+                                          th:object="${user}"
+                                          th:action="@{/register}"
+                                          method="post"
+                                    >
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input name="email" type="email" class="single-field" placeholder="Email">
+                                                <span class="error-message"></span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="fullName" type="text" class="single-field" placeholder="Full Name">
+                                                <span class="error-message"></span>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input name="userName" type="text" class="single-field" placeholder="User Name">
+                                                <span class="error-message"></span>
+                                            </div>
+                                            <div class="col-12">
+                                                <input name="password" type="password" class="single-field" placeholder="Password">
+                                                <span class="error-message"></span>
+                                            </div>
+                                            <div class="col-12">
+                                                <input  name="phoneNumber" type="phone" class="single-field" placeholder="PhoneNumber">
+                                                <span class="error-message"></span>
+                                            </div>
+                                            <div class="col-12">
+                                                <button class="submit-btn">Create Account</button>
+                                            </div>
+                                            <div class="col-12">
+                                                <a href="/login" class="submit-btn">Login</a>
+                                            </div>
+                                        </div>
+                                        <h6 class="terms-condition">I have read &amp; accepted the <a href="#">terms of use</a></h6>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- JS
+============================================ -->
+<script>
+    const form = document.querySelector('.signup-inner--form');
+
+    const emailInput = form.querySelector('input[name = "email"]');
+
+    const fullNameInput = form.querySelector('input[name = "fullName"]');
+
+    const userNameInput = form.querySelector('input[name="userName"]');
+
+    const passwordInput = form.querySelector('input[name="password"]');
+
+    const phoneNumberInput = form.querySelector('input[name="phoneNumber"]');
+
+    // Thêm sự kiện submit cho form
+    form.addEventListener('submit', (e) => {
+        // Ngăn chặn hành động mặc định của form (gửi dữ liệu lên server)
+        e.preventDefault();
+
+        // Kiểm tra dữ liệu nhập vào
+        let isValid = true;
+
+        // Kiểm tra email
+        if (!emailInput.value) {
+            emailInput.classList.add('error');
+            emailInput.nextElementSibling.innerText = 'Vui lòng nhập email';
+            isValid = false;
+        } else if (!isValidEmail(emailInput.value)) {
+            emailInput.classList.add('error');
+            emailInput.nextElementSibling.innerText = 'Email không hợp lệ';
+            isValid = false;
+        } else {
+            emailInput.classList.remove('error'); // Nếu dữ liệu hợp lệ, xóa class error
+            emailInput.nextElementSibling.innerText = ''; // Nếu dữ liệu hợp lệ, xóa thông báo lỗi
+        }
+
+        // Kiểm tra họ tên
+        if (!fullNameInput.value) {
+            fullNameInput.classList.add('error');
+            fullNameInput.nextElementSibling.innerText = 'Vui lòng nhập Họ tên đầy đủ';
+            isValid = false;
+        } else {
+            fullNameInput.classList.remove('error'); // Nếu dữ liệu hợp lệ, xóa class error
+            fullNameInput.nextElementSibling.innerText = ''; // Nếu dữ liệu hợp lệ, xóa thông báo lỗi
+        }
+
+        // Kiểm tra tên đăng nhập
+        if (!userNameInput.value) {
+            userNameInput.classList.add('error');
+            userNameInput.nextElementSibling.innerText = 'Vui lòng nhập tên người dùng';
+            isValid = false;
+        } else {
+            userNameInput.classList.remove('error'); // Nếu dữ liệu hợp lệ, xóa class error
+            userNameInput.nextElementSibling.innerText = ''; // Nếu dữ liệu hợp lệ, xóa thông báo lỗi
+        }
+
+        // Kiểm tra mật khẩu
+        if (!passwordInput.value) {
+            passwordInput.classList.add('error');
+            passwordInput.nextElementSibling.innerText = 'Vui lòng nhập mật khẩu';
+            isValid = false;
+        } else if (passwordInput.value.length < 8) {
+            passwordInput.nextElementSibling.innerText = 'Mật khẩu phải có ít nhất 8 ký tự';
+            isValid = false;
+        } else {
+            passwordInput.classList.remove('error'); // Nếu dữ liệu hợp lệ, xóa class error
+            passwordInput.nextElementSibling.innerText = ''; // Nếu dữ liệu hợp lệ, xóa thông báo lỗi
+        }
+
+        // Kiểm tra số điện thoại
+        if (!phoneNumberInput.value) {
+            phoneNumberInput.classList.add('error');
+            phoneNumberInput.nextElementSibling.innerText = 'Vui lòng nhập số điện thoại';
+            isValid = false;
+        } else if (!isValidPhoneNumber(phoneNumberInput.value)) {
+            phoneNumberInput.nextElementSibling.innerText = 'Số điện thoại không hợp lệ';
+            isValid = false;
+        } else {
+            phoneNumberInput.classList.remove('error'); // Nếu dữ liệu hợp lệ, xóa class error
+            phoneNumberInput.nextElementSibling.innerText = ''; // Nếu dữ liệu hợp lệ, xóa thông báo lỗi
+        }
+
+        // Nếu dữ liệu hợp lệ, gửi form lên server
+        if (isValid) {
+            form.submit();
+        }
+    });
+
+    // Hàm kiểm tra định dạng email
+    function isValidEmail(email) {
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+        return regex.test(email);
+    }
+
+    // Hàm kiểm tra định dạng số điện thoại
+    function isValidPhoneNumber(phoneNumber) {
+        const regex = /^\d{10}$/;
+        return regex.test(phoneNumber);
+    }
+</script>
+
+
+
+<!-- Modernizer JS -->
+<script src="../assets/js/vendor/modernizr-3.6.0.min.js"></script>
+<!-- jQuery JS -->
+<script src="../assets/js/vendor/jquery-3.3.1.min.js"></script>
+<!-- Popper JS -->
+<script src="../assets/js/vendor/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="../assets/js/vendor/bootstrap.min.js"></script>
+<!-- Slick Slider JS -->
+<script src="../assets/js/plugins/slick.min.js"></script>
+<!-- nice select JS -->
+<script src="../assets/js/plugins/nice-select.min.js"></script>
+<!-- audio video player JS -->
+<script src="../assets/js/plugins/plyr.min.js"></script>
+<!-- perfect scrollbar js -->
+<script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+<!-- light gallery js -->
+<script src="../assets/js/plugins/lightgallery-all.min.js"></script>
+<!-- image loaded js -->
+<script src="../assets/js/plugins/imagesloaded.pkgd.min.js"></script>
+<!-- isotope filter js -->
+<script src="../assets/js/plugins/isotope.pkgd.min.js"></script>
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
